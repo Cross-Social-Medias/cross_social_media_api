@@ -19,6 +19,11 @@ defmodule CrossSocialMediasApi.Router do
     get "/", PageController, :index
   end
 
+  scope "/api/v1", CrossSocialMediasApi do
+      pipe_through :api
+      get "/users", UserController, :index
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", CrossSocialMediasApi do
   #   pipe_through :api
