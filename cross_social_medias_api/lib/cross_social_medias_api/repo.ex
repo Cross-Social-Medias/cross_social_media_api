@@ -24,4 +24,7 @@ defmodule CrossSocialMediasApi.Repo do
     ]
   end
 
+  def get_user(id) do
+    Enum.find users(), fn elem -> elem.id == id end
+  end
 end

@@ -1,4 +1,4 @@
 # web/models/user.ex
-defmodule ApiExample.User do
+defmodule CrossSocialMediasApi.User do
   defstruct [:id, :name, :email, :password, :stooge]
 end
