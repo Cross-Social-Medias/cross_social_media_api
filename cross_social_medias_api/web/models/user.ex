@@ -8,12 +8,12 @@ defmodule CrossSocialMediasApi.User do
     field :password, :string
     field :stooge, :string
 
-    timestamps
+    timestamps()
   end
 
 	def changeset(model, params \\ :empty) do
     model
       |> cast(params, [:name, :email, :password, :stooge])
-      |> unique_constraint(:email)
+      |> validate_required([:name, :password, :email])
   end
 end
