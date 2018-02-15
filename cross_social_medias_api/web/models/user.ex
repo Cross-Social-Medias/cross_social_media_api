@@ -10,4 +10,10 @@ defmodule CrossSocialMediasApi.User do
 
     timestamps
   end
+
+	def changeset(model, params \\ :empty) do
+    model
+      |> cast(params, [:name, :email, :password, :stooge])
+      |> unique_constraint(:email)
+  end
 end
