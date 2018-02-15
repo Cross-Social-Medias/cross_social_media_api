@@ -23,6 +23,8 @@ defmodule CrossSocialMediasApi.Router do
       pipe_through :api
       get "/users", UserController, :index
       get "/users/:id", UserController, :show
+      post "/users", UserController, :create
+      put "/users/:id", UserController, :update
   end
 
   # Other scopes may use custom stacks.
