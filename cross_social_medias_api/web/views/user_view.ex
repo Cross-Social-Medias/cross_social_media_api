@@ -14,6 +14,10 @@ defmodule CrossSocialMediasApi.UserView do
   end
 
   def render("error.json", _assigns) do
-  	%{error: "User not found."}
-	end
+    %{error: "User not found."}
+  end
+
+  def render("update_error.json", _assigns) do
+    %{errors: ["unable to update user"]}
+  end
 end
