@@ -8,10 +8,9 @@ defmodule CrossSocialMediasApi.UserController do
     changeset = User.changeset(user, params)
     case Repo.update(changeset) do
       {:ok, user} ->
-        json conn |> put_status(:ok), user
+        render conn, "show.json", user: user
       {:error, _result} ->
-        json conn |> put_status(:bad_request),
-                     %{errors: ["unable to update user"]}
+        conn |> put_status(:bad_request) |> render("update_error.json")
     end
   end
 
@@ -28,12 +27,11 @@ defmodule CrossSocialMediasApi.UserController do
   end
 
   def create(conn, params) do
-    changeset = User.changeset(
-      %User{}, params)
+    changeset = User.changeset(%User{}, params)
 
     case Repo.insert(changeset) do
           {:ok, user} ->
-            json conn |> put_status(:created), user
+            conn |> put_status(:created) |> render "show.json", user: user
           {:error, _changeset} ->
             json conn |> put_status(:bad_request), %{errors: ["unable to create user"] }
     end
