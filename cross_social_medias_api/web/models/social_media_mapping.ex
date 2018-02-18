@@ -9,4 +9,10 @@ defmodule CrossSocialMediasApi.SocialMediaMapping do
     
     timestamps()
   end
+
+  def changeset(model, params \\ :empty) do
+    model
+      |> cast(params, [:mapping_name, :twitter_username, :instagram_username])
+      |> validate_required([:mapping_name, :twitter_username])
+  end
 end
