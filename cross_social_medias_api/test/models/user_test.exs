@@ -21,7 +21,7 @@ defmodule CrossSocialMediasApi.UserTest do
     assert changeset.valid?
   end
 
-  test "name, email, and password is required" do
+  test "name, email, and password are required" do
     changeset = User.changeset(%User{}, Map.delete(@valid_attrs, :name))
     refute changeset.valid?
 
