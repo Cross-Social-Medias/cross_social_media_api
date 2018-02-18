@@ -2,18 +2,10 @@
 defmodule CrossSocialMediasApi.UserController do
   use CrossSocialMediasApi.Web, :controller
 
-  defp conn_with_status(conn, nil) do
-    conn
-      |> put_status(:not_found)
-  end
-
-  defp conn_with_status(conn, _) do
-    conn
-      |> put_status(:ok)
-  end
+  alias CrossSocialMediasApi.{User, Repo}
 
   defp perform_update(conn, user, params) do
-    changeset = CrossSocialMediasApi.User.changeset(user, params)
+    changeset = User.changeset(user, params)
     case Repo.update(changeset) do
       {:ok, user} ->
         json conn |> put_status(:ok), user
@@ -24,19 +16,19 @@ defmodule CrossSocialMediasApi.UserController do
   end
 
   def index(conn, _params) do
-    users = Repo.all(CrossSocialMediasApi.User)
-    json conn_with_status(conn, users), users
+    users = Repo.all(User)
+    render conn, "index.json", users: users
   end
 
   def show(conn, %{"id" => id}) do
-    user = Repo.get(CrossSocialMediasApi.User, String.to_integer(id))
-
-    json conn_with_status(conn, user), user
+    case Repo.get(User, id) do
+      user -> render conn, "show.json", user: user
+    end
   end
 
   def create(conn, params) do
-    changeset = CrossSocialMediasApi.User.changeset(
-      %CrossSocialMediasApi.User{}, params)
+    changeset = User.changeset(
+      %User{}, params)
 
     case Repo.insert(changeset) do
           {:ok, user} ->
@@ -47,7 +39,7 @@ defmodule CrossSocialMediasApi.UserController do
   end
 
   def update(conn, %{"id" => id} = params) do
-    user = Repo.get(CrossSocialMediasApi.User, id)
+    user = Repo.get(User, id)
     if user do
       perform_update(conn, user, params)
     else
