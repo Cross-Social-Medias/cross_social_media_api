@@ -26,10 +26,10 @@ defmodule CrossSocialMediasApi.UserTest do
     refute changeset.valid?
 
     changeset_2 = User.changeset(%User{}, Map.delete(@valid_attrs, :email))
-    refute changeset.valid?
+    refute changeset_2.valid?
 
     changeset_3 = User.changeset(%User{}, Map.delete(@valid_attrs, :password))
-    refute changeset.valid?
+    refute changeset_3.valid?
 
   end
 
