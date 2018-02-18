@@ -11,7 +11,7 @@ defmodule CrossSocialMediasApi.User do
     timestamps()
   end
 
-	def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ :empty) do
     model
       |> cast(params, [:name, :email, :password, :stooge])
       |> validate_required([:name, :password, :email])
