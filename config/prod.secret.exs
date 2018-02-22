@@ -9,7 +9,10 @@ use Mix.Config
 # kept out of version control and might be hard to recover
 # or recreate for your teammates (or yourself later on).
 config :cross_social_medias_api, CrossSocialMediasApi.Endpoint,
-  secret_key_base: "JCaVu1x628WLL6AXAVhbIIT/UWsmpK4GbGwnyfEOYzR5RqU3cuNwxFOPyhb48ZwS"
+  load_from_system_env: true,
+  url: [host: "example.com", port: 80],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
 
 # Configure your database
 config :cross_social_medias_api, CrossSocialMediasApi.Repo,
