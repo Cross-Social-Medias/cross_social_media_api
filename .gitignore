@@ -3,3 +3,4 @@
 ngrok
 package-lock.json
 _build/
+/config/prod.secret.exs
