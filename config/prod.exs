@@ -22,7 +22,8 @@ use Mix.Config
 
 config :cross_social_medias_api, CrossSocialMediasApi.Endpoint,
   load_from_system_env: true,
-  url: [scheme: "https", host: "salty-ocean-50440.herokuapp.com", port: 443],
+  http: [port: System.get_env("PORT")],
+  url: [scheme: "https", host: "serene-mountain-86358.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
