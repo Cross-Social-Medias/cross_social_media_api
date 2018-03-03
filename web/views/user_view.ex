@@ -6,7 +6,7 @@ defmodule CrossSocialMediasApi.UserView do
   end
 
   def render("user.json", %{user: user}) do
-    %{name: user.name, email: user.email, stooge: user.stooge}
+    %{id: user.id, name: user.name, email: user.email, stooge: user.stooge}
   end
 
   def render("show.json", %{user: user}) do
