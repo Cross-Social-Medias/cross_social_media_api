@@ -6,7 +6,11 @@ defmodule CrossSocialMediasApi.SocialMediaMappingView do
   end
 
   def render("social_media_mapping.json", %{social_media_mapping: social_media_mapping}) do
-    %{mapping_name: social_media_mapping.mapping_name, twitter_username: social_media_mapping.twitter_username, instagram_username: social_media_mapping.instagram_username}
+    %{ mapping_name: social_media_mapping.mapping_name,
+       twitter_username: social_media_mapping.twitter_username,
+       instagram_username: social_media_mapping.instagram_username,
+       created_by: social_media_mapping.created_by
+    }
   end
 
   def render("show.json", %{social_media_mapping: social_media_mapping}) do
