@@ -5,8 +5,8 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
 
   describe "index/2" do
     test "responds with all mappings" do
-      social_media_mappings = [ SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella"}),
-                SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "John doe", twitter_username: "johnDoe", instagram_username: "JoJo"}) ]
+      social_media_mappings = [ SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella", created_by: 1}),
+                SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "John doe", twitter_username: "johnDoe", instagram_username: "JoJo", created_by: 1}) ]
 
       Enum.each(social_media_mappings, &Repo.insert!(&1))
 
@@ -29,7 +29,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
   describe "create/2" do
     test "Creates, and responds with a newly created mapping if attributes are valid" do
       response = build_conn()
-        |> post(social_media_mapping_path(build_conn(), :create, %{mapping_name: "John doe", twitter_username: "johnDoe", instagram_username: "JoJo"}))
+        |> post(social_media_mapping_path(build_conn(), :create, %{mapping_name: "John doe", twitter_username: "johnDoe", instagram_username: "JoJo", created_by: 1}))
         |> json_response(201)
 
       expected = %{ "data" => %{ "mapping_name" => "John doe", "twitter_username" => "johnDoe", "instagram_username" => "JoJo" } }
@@ -50,7 +50,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
 
   describe "show/2" do
     test "Responds with a newly created mapping if the mapping is found" do
-      user = SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella"})
+      user = SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella", created_by: 1})
         |> Repo.insert!
 
       response = build_conn()
@@ -76,7 +76,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
 
   describe "update/2" do
     test "Edits, and responds with the user if attributes are valid" do
-      social_media_mapping = SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "John", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella"})
+      social_media_mapping = SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "John", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella", created_by: 1})
         |> Repo.insert!
 
       response = build_conn()
