@@ -5,10 +5,8 @@ defmodule CrossSocialMediasApi.UserControllerTest do
 
   describe "index/2" do
     test "responds with all Users" do
-      users = [ User.changeset(%User{}, %{name: "John", email: "john@example.com", password: "fake", stooge: "Jojo"}),
-                User.changeset(%User{}, %{name: "Jane", email: "jane@example.com", password: "fake"}) ]
-
-      Enum.each(users, &Repo.insert!(&1))
+      user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", stooge: "Jojo"}))
+      user_2 = Repo.insert!(User.changeset(%User{}, %{ name: "Jane", email: "jane@example.com", password: "fake"}))
 
       response = build_conn()
         |> get(user_path(build_conn(), :index))
@@ -16,8 +14,8 @@ defmodule CrossSocialMediasApi.UserControllerTest do
 
       expected = %{
         "data" => [
-          %{ "name" => "John", "email" => "john@example.com", "stooge" => "Jojo" },
-          %{ "name" => "Jane", "email" => "jane@example.com", "stooge" => nil }
+          %{ "id" => user_1.id, "name" => "John", "email" => "john@example.com", "stooge" => "Jojo" },
+          %{ "id" => user_2.id, "name" => "Jane", "email" => "jane@example.com", "stooge" => nil }
         ]
       }
 
@@ -29,10 +27,10 @@ defmodule CrossSocialMediasApi.UserControllerTest do
   describe "create/2" do
     test "Creates, and responds with a newly created user if attributes are valid" do
       response = build_conn()
-        |> post(user_path(build_conn(), :create, %{name: "John", email: "john@example.com", password: "fake"}))
+        |> post(user_path(build_conn(), :create, %{ name: "John", email: "john@example.com", password: "fake"}))
         |> json_response(201)
 
-      expected = %{ "data" => %{ "name" => "John", "email" => "john@example.com", "stooge" => nil } }
+      expected = %{ "data" => %{ "id" => response["data"]["id"], "name" => "John", "email" => "john@example.com", "stooge" => nil } }
 
       assert response == expected
     end
@@ -50,14 +48,14 @@ defmodule CrossSocialMediasApi.UserControllerTest do
 
   describe "show/2" do
     test "Responds with a newly created user if the user is found" do
-      user = User.changeset(%User{}, %{name: "John", email: "john@example.com", password: "fake"})
+      user = User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake"})
         |> Repo.insert!
 
       response = build_conn()
         |> get(user_path(build_conn(), :show, user.id))
         |> json_response(200)
 
-      expected = %{ "data" => %{ "name" => "John", "email" => "john@example.com", "stooge" => nil } }
+      expected = %{ "data" => %{ "id" => user.id, "name" => "John", "email" => "john@example.com", "stooge" => nil } }
 
       assert response == expected
     end
@@ -76,14 +74,14 @@ defmodule CrossSocialMediasApi.UserControllerTest do
 
   describe "update/2" do
     test "Edits, and responds with the user if attributes are valid" do
-      user = User.changeset(%User{}, %{name: "John", email: "john@example.com", password: "fake"})
+      user = User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake"})
         |> Repo.insert!
 
       response = build_conn()
         |> put(user_path(build_conn(), :update, user.id, name: "Jane"))
         |> json_response(200)
 
-      expected = %{  "data" => %{"name" => "Jane", "email" => "john@example.com", "stooge" => nil} }
+      expected = %{  "data" => %{"id" => user.id, "name" => "Jane", "email" => "john@example.com", "stooge" => nil} }
 
       assert response == expected
     end

@@ -16,8 +16,8 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
 
       expected = %{
         "data" => [
-          %{ "mapping_name" => "Anthony Lastella", "twitter_username" => "AnthonyLastella", "instagram_username" => "anthonyLastella" },
-          %{ "mapping_name" => "John doe", "twitter_username" => "johnDoe", "instagram_username" => "JoJo" }
+          %{ "mapping_name" => "Anthony Lastella", "twitter_username" => "AnthonyLastella", "instagram_username" => "anthonyLastella", "created_by" => 1 },
+          %{ "mapping_name" => "John doe", "twitter_username" => "johnDoe", "instagram_username" => "JoJo", "created_by" => 1 }
         ]
       }
 
@@ -32,7 +32,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
         |> post(social_media_mapping_path(build_conn(), :create, %{mapping_name: "John doe", twitter_username: "johnDoe", instagram_username: "JoJo", created_by: 1}))
         |> json_response(201)
 
-      expected = %{ "data" => %{ "mapping_name" => "John doe", "twitter_username" => "johnDoe", "instagram_username" => "JoJo" } }
+      expected = %{ "data" => %{ "mapping_name" => "John doe", "twitter_username" => "johnDoe", "instagram_username" => "JoJo", "created_by" => 1 } }
 
       assert response == expected
     end
@@ -57,7 +57,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
         |> get(social_media_mapping_path(build_conn(), :show, user.id))
         |> json_response(200)
 
-      expected = %{ "data" => %{ "mapping_name" => "Anthony Lastella", "twitter_username" => "AnthonyLastella", "instagram_username" => "anthonyLastella" } }
+      expected = %{ "data" => %{ "mapping_name" => "Anthony Lastella", "twitter_username" => "AnthonyLastella", "instagram_username" => "anthonyLastella", "created_by" => 1 } }
 
       assert response == expected
     end
@@ -83,7 +83,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
         |> put(social_media_mapping_path(build_conn(), :update, social_media_mapping.id, mapping_name: "Jane"))
         |> json_response(200)
 
-      expected = %{"data" => %{ "mapping_name" => "Jane", "twitter_username" => "AnthonyLastella", "instagram_username" => "anthonyLastella" } }
+      expected = %{"data" => %{ "mapping_name" => "Jane", "twitter_username" => "AnthonyLastella", "instagram_username" => "anthonyLastella", "created_by" => 1 } }
 
       assert response == expected
     end
