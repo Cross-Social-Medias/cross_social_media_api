@@ -32,7 +32,7 @@ defmodule CrossSocialMediasApi.User do
       %Ecto.Changeset{valid?: true,
                       changes: %{password: password}} ->
         put_change(changeset,
-                   :password_hash,
+                   :password,
                    Comeonin.Bcrypt.hashpwsalt(password))
       _ ->
         changeset
