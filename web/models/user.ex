@@ -8,6 +8,8 @@ defmodule CrossSocialMediasApi.User do
     field :password, :string
     field :stooge, :string
 
+    has_many :social_media_mappings, CrossSocialMediasApi.SocialMediaMapping
+
     timestamps()
   end
 

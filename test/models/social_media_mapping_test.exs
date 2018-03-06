@@ -2,8 +2,8 @@ defmodule CrossSocialMediasApi.SocialMediaMappingTest do
   use CrossSocialMediasApi.ModelCase
 
   alias CrossSocialMediasApi.SocialMediaMapping
-    
-  @valid_attrs %{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonylastella", created_by: 2}
+
+  @valid_attrs %{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonylastella", created_by: 2, user_id: 2}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

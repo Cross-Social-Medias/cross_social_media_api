@@ -7,13 +7,15 @@ defmodule CrossSocialMediasApi.SocialMediaMapping do
     field :twitter_username, :string
     field :instagram_username, :string
     field :created_by, :integer
-    
+
+    belongs_to :user, CrossSocialMediasApi.User
     timestamps()
   end
 
   def changeset(model, params \\ :empty) do
     model
-      |> cast(params, [:mapping_name, :twitter_username, :instagram_username, :created_by])
-      |> validate_required([:mapping_name, :twitter_username, :created_by])
+      |> cast(params, [:mapping_name, :twitter_username, :instagram_username, :created_by, :user_id])
+      |> validate_required([:mapping_name, :twitter_username, :created_by, :user_id])
+      |> assoc_constraint(:user)
   end
 end
