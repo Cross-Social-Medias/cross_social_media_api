@@ -30,7 +30,14 @@ defmodule CrossSocialMediasApi.UserTest do
 
     changeset_3 = User.changeset(%User{}, Map.delete(@valid_attrs, :password))
     refute changeset_3.valid?
+  end
 
+  test "check password constraint" do
+    changeset = User.registration_changeset(%User{}, %{name: "John", email: "john@email.com", stooge: "jojo", password: "short"})
+    refute changeset.valid?
+
+    changeset_2 = User.registration_changeset(%User{}, @valid_attrs)
+    assert changeset_2.valid?
   end
 
 end
