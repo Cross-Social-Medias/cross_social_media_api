@@ -5,7 +5,7 @@ defmodule CrossSocialMediasApi.UserController do
   alias CrossSocialMediasApi.{User, Repo}
 
   defp perform_update(conn, user, params) do
-    changeset = User.changeset(user, params)
+    changeset = User.registration_changeset(user, params)
     case Repo.update(changeset) do
       {:ok, user} ->
         render conn, "show.json", user: user
@@ -27,7 +27,7 @@ defmodule CrossSocialMediasApi.UserController do
   end
 
   def create(conn, params) do
-    changeset = User.changeset(%User{}, params)
+    changeset = User.registration_changeset(%User{}, params)
 
     case Repo.insert(changeset) do
           {:ok, user} ->

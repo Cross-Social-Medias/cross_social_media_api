@@ -27,7 +27,7 @@ defmodule CrossSocialMediasApi.UserControllerTest do
   describe "create/2" do
     test "Creates, and responds with a newly created user if attributes are valid" do
       response = build_conn()
-        |> post(user_path(build_conn(), :create, %{ name: "John", email: "john@example.com", password: "fake"}))
+        |> post(user_path(build_conn(), :create, %{ name: "John", email: "john@example.com", password: "fakePassword"}))
         |> json_response(201)
 
       expected = %{ "data" => %{ "id" => response["data"]["id"], "name" => "John", "email" => "john@example.com", "stooge" => nil } }
