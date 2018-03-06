@@ -19,8 +19,8 @@ defmodule CrossSocialMediasApi.User do
       |> validate_required([:name, :password, :email])
   end
 
-  def registration_changeset(struct, params) do
-    struct
+  def registration_changeset(model, params) do
+    model
     |> changeset(params)
     |> cast(params, ~w(password)a, [])
     |> validate_length(:password, min: 6, max: 100)
