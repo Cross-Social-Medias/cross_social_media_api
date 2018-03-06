@@ -23,7 +23,6 @@ defmodule CrossSocialMediasApi.Router do
       pipe_through :api
       resources "/users", UserController
       resources "/social_media_mappings", SocialMediaMappingController
-      resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
   # Other scopes may use custom stacks.
