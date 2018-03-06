@@ -14,6 +14,6 @@ CrossSocialMediasApi.Repo.insert(%CrossSocialMediasApi.User{name: "Guillaume", e
 CrossSocialMediasApi.Repo.insert(%CrossSocialMediasApi.User{name: "Bertrand", email: "bertrand@domain.com", password: "donttell", stooge: "ber"})
 {:ok, user_demo} = CrossSocialMediasApi.Repo.insert(%CrossSocialMediasApi.User{name: "Demo", email: "demo@admin.com", password: "admin", stooge: "demo"})
 
-CrossSocialMediasApi.Repo.insert(%CrossSocialMediasApi.SocialMediaMapping{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella", created_by: user_demo.id})
-CrossSocialMediasApi.Repo.insert(%CrossSocialMediasApi.SocialMediaMapping{mapping_name: "Bertrand Dupond", twitter_username: "Ber", instagram_username: "fake_insta", created_by: user_demo.id})
-CrossSocialMediasApi.Repo.insert(%CrossSocialMediasApi.SocialMediaMapping{mapping_name: "Guillaume Gomez", twitter_username: "zemog_emualluig", instagram_username: "fake_insta2", created_by: user_demo.id})
+CrossSocialMediasApi.Repo.insert(%CrossSocialMediasApi.SocialMediaMapping{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella", created_by: user_demo.id, user_id: user_demo.id})
+CrossSocialMediasApi.Repo.insert(%CrossSocialMediasApi.SocialMediaMapping{mapping_name: "Bertrand Dupond", twitter_username: "Ber", instagram_username: "fake_insta", created_by: user_demo.id, user_id: user_demo.id})
+CrossSocialMediasApi.Repo.insert(%CrossSocialMediasApi.SocialMediaMapping{mapping_name: "Guillaume Gomez", twitter_username: "zemog_emualluig", instagram_username: "fake_insta2", created_by: user_demo.id, user_id: user_demo.id})
