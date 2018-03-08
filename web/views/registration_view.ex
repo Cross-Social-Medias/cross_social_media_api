@@ -1,7 +1,7 @@
 defmodule CrossSocialMediasApi.RegistrationView do
   use CrossSocialMediasApi.Web, :view
 
-  def render("success.json", %{user: user}) do
+  def render("success.json", %{user: _user}) do
     %{
       status: :ok,
       message: """
