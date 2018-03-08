@@ -19,7 +19,14 @@ defmodule CrossSocialMediasApi.User do
       |> validate_required([:name, :password, :email])
   end
 
-  def registration_changeset(model, params) do
+  def registration_changeset(model, params \\ :empty) do
+    model
+    |> cast(params, [:email, :name, :password])
+    |> validate_required([:email, :name, :password])
+    |> validate_changeset(params)
+  end
+
+  def validate_changeset(model, params) do
     model
     |> changeset(params)
     |> cast(params, ~w(password)a, [])
