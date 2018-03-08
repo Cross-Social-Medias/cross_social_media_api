@@ -2,6 +2,8 @@
 defmodule CrossSocialMediasApi.User do
   use CrossSocialMediasApi.Web, :model
 
+  alias CrossSocialMediasApi.{Repo, User}
+
   schema "users" do
     field :name, :string
     field :email, :string
@@ -34,6 +36,19 @@ defmodule CrossSocialMediasApi.User do
     |> hash_password
   end
 
+  def find_and_confirm_password(email, password) do
+    case Repo.get_by(User, email: email) do
+      nil ->
+        {:error, :not_found}
+      user ->
+        if Comeonin.Bcrypt.checkpw(password, user.password) do
+          {:ok, user}
+        else
+          {:error, :unauthorized}
+        end
+    end
+  end
+
   defp hash_password(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true,
@@ -45,4 +60,5 @@ defmodule CrossSocialMediasApi.User do
         changeset
     end
   end
+
 end
