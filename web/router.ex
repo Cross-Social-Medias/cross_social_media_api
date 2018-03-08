@@ -13,6 +13,10 @@ defmodule CrossSocialMediasApi.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :authenticated do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
   scope "/", CrossSocialMediasApi do
     pipe_through :browser # Use the default browser stack
 
@@ -20,7 +24,7 @@ defmodule CrossSocialMediasApi.Router do
   end
 
   scope "/api/v1", CrossSocialMediasApi do
-      pipe_through :api
+      pipe_through [:api, :authenticated]
       resources "/users", UserController
       resources "/social_media_mappings", SocialMediaMappingController
   end
