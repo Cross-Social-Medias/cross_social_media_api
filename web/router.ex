@@ -26,6 +26,7 @@ defmodule CrossSocialMediasApi.Router do
   scope "/api/v1", CrossSocialMediasApi do
       pipe_through :api
       post "/sign_up", RegistrationController, :sign_up
+      post "/sign_in", SessionController, :sign_in
       
       pipe_through :authenticated
       resources "/users", UserController
