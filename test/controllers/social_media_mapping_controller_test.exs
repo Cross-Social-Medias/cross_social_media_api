@@ -3,8 +3,14 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
 
   alias CrossSocialMediasApi.{Repo, SocialMediaMapping, User}
 
+  setup do
+    user = Repo.insert!(User.registration_changeset(%User{}, %{ name: "Test", email: "test@example.com", password: "fakePassword", stooge: "testAuth"}))
+    {:ok, jwt, full_claims} = Guardian.encode_and_sign(user)
+    {:ok, %{user: user, jwt: jwt, claims: full_claims}}
+  end
+
   describe "index/2" do
-    test "responds with all mappings" do
+    test "responds with all mappings", %{jwt: jwt}  do
       user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", stooge: "Jojo"}))
       social_media_mappings = [ SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella", created_by: user_1.id, user_id: user_1.id}),
                 SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "John doe", twitter_username: "johnDoe", instagram_username: "JoJo", created_by: user_1.id, user_id: user_1.id}) ]
@@ -12,6 +18,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
       Enum.each(social_media_mappings, &Repo.insert!(&1))
 
       response = build_conn()
+        |> put_req_header("authorization", "Bearer #{jwt}")
         |> get(social_media_mapping_path(build_conn(), :index))
         |> json_response(200)
 
@@ -28,9 +35,10 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
 
 
   describe "create/2" do
-    test "Creates, and responds with a newly created mapping if attributes are valid" do
+    test "Creates, and responds with a newly created mapping if attributes are valid", %{jwt: jwt} do
       user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", stooge: "Jojo"}))
       response = build_conn()
+        |> put_req_header("authorization", "Bearer #{jwt}")
         |> post(social_media_mapping_path(build_conn(), :create, %{mapping_name: "John doe", twitter_username: "johnDoe", instagram_username: "JoJo", created_by: user_1.id, user_id: user_1.id}))
         |> json_response(201)
 
@@ -39,8 +47,9 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
       assert response == expected
     end
 
-    test "Returns an error and does not create a mapping if attributes are invalid" do
-          response = build_conn()
+    test "Returns an error and does not create a mapping if attributes are invalid", %{jwt: jwt} do
+      response = build_conn()
+        |> put_req_header("authorization", "Bearer #{jwt}")
         |> post(social_media_mapping_path(build_conn(), :create, %{twitter_username: "JohnDoe"}))
         |> json_response(:bad_request)
 
@@ -51,12 +60,13 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
   end
 
   describe "show/2" do
-    test "Responds with a newly created mapping if the mapping is found" do
+    test "Responds with a newly created mapping if the mapping is found", %{jwt: jwt} do
       user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", stooge: "Jojo"}))
       social_media_mapping = SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella", created_by: user_1.id, user_id: user_1.id })
         |> Repo.insert!
 
       response = build_conn()
+        |> put_req_header("authorization", "Bearer #{jwt}")
         |> get(social_media_mapping_path(build_conn(), :show, social_media_mapping.id))
         |> json_response(200)
 
@@ -65,8 +75,9 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
       assert response == expected
     end
 
-    test "Responds with a message indicating mapping not found" do
+    test "Responds with a message indicating mapping not found", %{jwt: jwt} do
       response = build_conn()
+        |> put_req_header("authorization", "Bearer #{jwt}")
         |> get(social_media_mapping_path(build_conn(), :show, 300))
         |> json_response(404)
 
@@ -78,12 +89,13 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
 
 
   describe "update/2" do
-    test "Edits, and responds with the user if attributes are valid" do
+    test "Edits, and responds with the user if attributes are valid", %{jwt: jwt} do
       user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", stooge: "Jojo"}))
       social_media_mapping = SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "John", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella", created_by: user_1.id, user_id: user_1.id})
         |> Repo.insert!
 
       response = build_conn()
+        |> put_req_header("authorization", "Bearer #{jwt}")
         |> put(social_media_mapping_path(build_conn(), :update, social_media_mapping.id, mapping_name: "Jane"))
         |> json_response(200)
 

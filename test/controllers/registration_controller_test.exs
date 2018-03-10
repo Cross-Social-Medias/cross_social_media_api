@@ -1,8 +1,6 @@
 defmodule CrossSocialMediasApi.RegistrationControllerTest do
   use CrossSocialMediasApi.ConnCase
 
-  alias CrossSocialMediasApi.{Repo, User}
-
   describe "sign_up/2" do
     test "should sign_up" do
       response = build_conn()
