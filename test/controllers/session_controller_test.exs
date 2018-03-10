@@ -9,10 +9,8 @@ defmodule CrossSocialMediasApi.SessionControllerTest do
       response = build_conn()
         |> post(session_path(build_conn(), :sign_in,
           %{
-            session: %{
-              email: user.email,
-              password: "MySuperPa55"
-            }
+            email: user.email,
+            password: "MySuperPa55"
           }
         ))
         |> json_response(200)
@@ -33,10 +31,8 @@ defmodule CrossSocialMediasApi.SessionControllerTest do
       response = build_conn()
         |> post(session_path(build_conn(), :sign_in, 
           %{
-            session: %{
-              email: "hello@world.com",
-              password: "MySuperPa55"
-            }
+            email: "hello@world.com",
+            password: "MySuperPa55"
           }
         ))
         |> json_response(401)

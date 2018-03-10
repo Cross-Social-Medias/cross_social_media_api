@@ -3,7 +3,7 @@ defmodule CrossSocialMediasApi.SessionController do
 
   alias CrossSocialMediasApi.User
 
-  def sign_in(conn, %{"session" => %{"email" => email, "password" => password}}) do  
+  def sign_in(conn, %{"email" => email, "password" => password}) do
     case User.find_and_confirm_password(email, password) do
       {:ok, user} ->
          {:ok, jwt, _full_claims} = Guardian.encode_and_sign(user, :api)
