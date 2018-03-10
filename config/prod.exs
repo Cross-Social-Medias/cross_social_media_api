@@ -37,6 +37,18 @@ config :cross_social_medias_api, CrossSocialMediasApi.Repo,
   url: System.get_env("DATABASE_URL"),
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   ssl: true
+
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "CrossSocialMediasApi",
+  ttl: { 30, :days },
+  allowed_drift: 2000,
+  verify_issuer: true, # optional
+  secret_key: Map.fetch!(System.get_env(), "SECRET_KEY_BASE_GUARDIAN"), # Insert previously generated secret key!
+  serializer: CrossSocialMediasApi.GuardianSerializer
+
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

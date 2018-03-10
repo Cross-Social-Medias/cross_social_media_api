@@ -54,3 +54,14 @@ config :cross_social_medias_api, CrossSocialMediasApi.Repo,
   database: "cross_social_medias_api_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "CrossSocialMediasApi",
+  ttl: { 30, :days },
+  allowed_drift: 2000,
+  verify_issuer: true, # optional
+  secret_key: "LaLvZ5B+M7RooHZLSRQIrZ6EIJ5y7zfqGqwT7Qm8c5JBGbEwk8+UooWNbEVBRSSe", # Insert previously generated secret key!
+  serializer: CrossSocialMediasApi.GuardianSerializer
+
