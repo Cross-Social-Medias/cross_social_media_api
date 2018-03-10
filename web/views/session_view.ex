@@ -12,7 +12,7 @@ defmodule CrossSocialMediasApi.SessionView do
     }
   end
 
-  def render("error.json", message) do
+  def render("error.json", _message) do
     %{ 
       status: :unprocessable_entity,
       message: "Could not sign in"
