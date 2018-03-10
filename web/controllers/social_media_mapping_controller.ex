@@ -6,7 +6,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingController do
 
   def index(conn, _params) do
     social_media_mappings = Repo.all(SocialMediaMapping)
-    render conn, "index.json", social_media_mappings: social_media_mappings
+    render(conn, "index.json", social_media_mappings: social_media_mappings)
   end
 
   def show(conn, %{"id" => id}) do
@@ -21,7 +21,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingController do
 
     case Repo.insert(changeset) do
           {:ok, social_media_mapping} ->
-            conn |> put_status(:created) |> render "show.json", social_media_mapping: social_media_mapping
+            conn |> put_status(:created) |> render("show.json", social_media_mapping: social_media_mapping)
           {:error, _changeset} ->
             json conn |> put_status(:bad_request), %{errors: ["unable to create mapping"] }
     end

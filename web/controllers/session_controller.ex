@@ -10,11 +10,11 @@ defmodule CrossSocialMediasApi.SessionController do
 
          conn
          |> put_status(200)
-         |> render "sign_in.json", user: user, jwt: jwt
+         |> render("sign_in.json", user: user, jwt: jwt)
       {:error, _reason} ->
         conn
         |> put_status(401)
-        |> render "error.json", message: "Could not login"
+        |> render("error.json", message: "Could not login")
     end
   end 
 
