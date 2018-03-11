@@ -20,4 +20,8 @@ defmodule CrossSocialMediasApi.UserView do
   def render("update_error.json", _assigns) do
     %{errors: ["unable to update user"]}
   end
+
+  def render("login.json", _param) do
+    %{message: "you are logged !"}
+  end
 end

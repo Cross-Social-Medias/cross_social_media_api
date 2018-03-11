@@ -27,6 +27,17 @@ config :cors_plug,
   max_age: 86400,
   methods: ["GET", "POST"]
 
+# Guardian
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "CrossSocialMediasApi",
+  ttl: { 30, :days },
+  allowed_drift: 2000,
+  verify_issuer: true, # optional
+  secret_key: "LaLvZ5B+M7RooHZLSRQIrZ6EIJ5y7zfqGqwT7Qm8c5JBGbEwk8+UooWNbEVBRSSe", # Insert previously generated secret key!
+  serializer: CrossSocialMediasApi.GuardianSerializer
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

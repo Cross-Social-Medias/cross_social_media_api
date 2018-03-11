@@ -20,7 +20,7 @@ defmodule CrossSocialMediasApi.Mixfile do
   def application do
     [
       mod: {CrossSocialMediasApi, []},
-      extra_applications: [:logger]
+      extra_applications: [:logger, :comeonin]
     ]
   end
 
@@ -42,7 +42,8 @@ defmodule CrossSocialMediasApi.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:cors_plug, "~> 1.5"},
-      {:comeonin, "~> 2.5"}
+      {:guardian, "~> 0.14"},
+      {:comeonin, "~> 3.0"}
     ]
   end
 
