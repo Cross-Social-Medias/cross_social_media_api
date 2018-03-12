@@ -8,7 +8,7 @@ defmodule CrossSocialMediasApi.Repo.Migrations.CreateUser do
       add :email, :string
       add :stooge, :string
 
-      timestamps
+      timestamps()
     end
 
     create unique_index(:users, [:email])
