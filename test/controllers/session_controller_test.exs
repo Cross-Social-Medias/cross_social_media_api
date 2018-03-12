@@ -16,13 +16,10 @@ defmodule CrossSocialMediasApi.SessionControllerTest do
         |> json_response(200)
 
       expected = %{
-        "status" => "ok",
         "message" => "You are successfully logged in! Add this token to authorization header to make authorized requests.",
-        "data" => 
-        %{
-          "email" => "john@example.com",
-          "token" => response["data"]["token"]
-        }
+        "user" => %{ "name" => "John", "email" => "john@example.com", "id" => response["user"]["id"], "stooge" => "Jojo"},
+        "token" => response["token"]
+        
       }
       assert response == expected
     end
@@ -37,7 +34,7 @@ defmodule CrossSocialMediasApi.SessionControllerTest do
         ))
         |> json_response(401)
 
-      expected = %{"message" => "Could not sign in", "status" => "unprocessable_entity"}
+      expected = %{"message" => "Could not sign in"}
       assert response == expected
     end
   end

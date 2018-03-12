@@ -3,18 +3,14 @@ defmodule CrossSocialMediasApi.SessionView do
 
   def render("sign_in.json", %{user: user, jwt: jwt}) do
     %{
-      status: :ok,
-      data: %{
-        token: jwt,
-        email: user.email
-      },
+      token: jwt,
+      user: render_one(user, CrossSocialMediasApi.UserView, "user.json"),
       message: "You are successfully logged in! Add this token to authorization header to make authorized requests."
     }
   end
 
   def render("error.json", _message) do
     %{ 
-      status: :unprocessable_entity,
       message: "Could not sign in"
     }
   end
