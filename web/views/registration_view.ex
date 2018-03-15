@@ -11,10 +11,14 @@ defmodule CrossSocialMediasApi.RegistrationView do
     }
   end
 
-  def render("error.json", _changeset) do
+  def render("error.json", changeset) do
+     message = Ecto.Changeset.traverse_errors(changeset, fn
+      {msg, opts} -> String.replace(msg, "%{count}", to_string(opts[:count]))
+      msg -> msg
+      end)
     %{ 
       status: :unprocessable_entity,
-      message: "User cannot be created"
+      message: message
     }
   end
 end
