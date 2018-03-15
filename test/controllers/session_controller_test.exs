@@ -5,7 +5,7 @@ defmodule CrossSocialMediasApi.SessionControllerTest do
 
   describe "log_in/2" do
     test "should logged in" do
-      user = Repo.insert!(User.validate_changeset(%User{}, %{ name: "John", email: "john@example.com", password: "MySuperPa55", stooge: "Jojo"}))
+      user = Repo.insert!(User.validate_changeset(%User{}, %{ name: "John", email: "john@example.com", password: "MySuperPa55", username: "Jojo"}))
       response = build_conn()
         |> post(session_path(build_conn(), :sign_in,
           %{
@@ -17,7 +17,7 @@ defmodule CrossSocialMediasApi.SessionControllerTest do
 
       expected = %{
         "message" => "You are successfully logged in! Add this token to authorization header to make authorized requests.",
-        "user" => %{ "name" => "John", "email" => "john@example.com", "id" => response["user"]["id"], "stooge" => "Jojo"},
+        "user" => %{ "name" => "John", "email" => "john@example.com", "id" => response["user"]["id"], "username" => "Jojo"},
         "token" => response["token"]
         
       }

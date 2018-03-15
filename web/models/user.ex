@@ -8,7 +8,7 @@ defmodule CrossSocialMediasApi.User do
     field :name, :string
     field :email, :string
     field :password, :string
-    field :stooge, :string
+    field :username, :string
 
     has_many :social_media_mappings, CrossSocialMediasApi.SocialMediaMapping
 
@@ -17,7 +17,7 @@ defmodule CrossSocialMediasApi.User do
 
   def changeset(model, params \\ :empty) do
     model
-      |> cast(params, [:name, :email, :password, :stooge])
+      |> cast(params, [:name, :email, :password, :username])
       |> validate_required([:name, :password, :email])
   end
 

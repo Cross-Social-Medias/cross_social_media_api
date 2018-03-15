@@ -4,14 +4,14 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
   alias CrossSocialMediasApi.{Repo, SocialMediaMapping, User}
 
   setup do
-    user = Repo.insert!(User.registration_changeset(%User{}, %{ name: "Test", email: "test@example.com", password: "fakePassword", stooge: "testAuth"}))
+    user = Repo.insert!(User.registration_changeset(%User{}, %{ name: "Test", email: "test@example.com", password: "fakePassword", username: "testAuth"}))
     {:ok, jwt, full_claims} = Guardian.encode_and_sign(user)
     {:ok, %{user: user, jwt: jwt, claims: full_claims}}
   end
 
   describe "index/2" do
     test "responds with all mappings", %{jwt: jwt}  do
-      user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", stooge: "Jojo"}))
+      user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", username: "Jojo"}))
       social_media_mappings = [
         SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella", youtube_channel_id: "123465", created_by: user_1.id, user_id: user_1.id}),
         SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "John doe", twitter_username: "johnDoe", instagram_username: "JoJo", youtube_channel_id: "123465", created_by: user_1.id, user_id: user_1.id})
@@ -38,7 +38,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
 
   describe "create/2" do
     test "Creates, and responds with a newly created mapping if attributes are valid", %{jwt: jwt} do
-      user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", stooge: "Jojo"}))
+      user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", username: "Jojo"}))
       response = build_conn()
         |> put_req_header("authorization", "Bearer #{jwt}")
         |> post(social_media_mapping_path(build_conn(), :create, %{mapping_name: "John doe", twitter_username: "johnDoe", instagram_username: "JoJo", youtube_channel_id: "123465", created_by: user_1.id, user_id: user_1.id}))
@@ -63,7 +63,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
 
   describe "show/2" do
     test "Responds with a newly created mapping if the mapping is found", %{jwt: jwt} do
-      user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", stooge: "Jojo"}))
+      user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", username: "Jojo"}))
       social_media_mapping = SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "Anthony Lastella", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella", youtube_channel_id: "123465", created_by: user_1.id, user_id: user_1.id })
         |> Repo.insert!
 
@@ -92,7 +92,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
 
   describe "update/2" do
     test "Edits, and responds with the user if attributes are valid", %{jwt: jwt} do
-      user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", stooge: "Jojo"}))
+      user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", username: "Jojo"}))
       social_media_mapping = SocialMediaMapping.changeset(%SocialMediaMapping{}, %{mapping_name: "John", twitter_username: "AnthonyLastella", instagram_username: "anthonyLastella", youtube_channel_id: "123465", created_by: user_1.id, user_id: user_1.id})
         |> Repo.insert!
 

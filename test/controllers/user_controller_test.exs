@@ -4,7 +4,7 @@ defmodule CrossSocialMediasApi.UserControllerTest do
   alias CrossSocialMediasApi.{Repo, User}
 
   setup do
-    user = Repo.insert!(User.registration_changeset(%User{}, %{ name: "Test", email: "test@example.com", password: "fakePassword", stooge: "testAuth"}))
+    user = Repo.insert!(User.registration_changeset(%User{}, %{ name: "Test", email: "test@example.com", password: "fakePassword", username: "testAuth"}))
     {:ok, jwt, full_claims} = Guardian.encode_and_sign(user)
     {:ok, %{user: user, jwt: jwt, claims: full_claims}}
   end
@@ -12,7 +12,7 @@ defmodule CrossSocialMediasApi.UserControllerTest do
 
   describe "index/2" do
     test "responds with all Users", %{jwt: jwt} do
-      user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", stooge: "Jojo"}))
+      user_1 = Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", username: "Jojo"}))
       user_2 = Repo.insert!(User.changeset(%User{}, %{ name: "Jane", email: "jane@example.com", password: "fake"}))
 
       response = build_conn()
@@ -22,9 +22,9 @@ defmodule CrossSocialMediasApi.UserControllerTest do
 
       expected = %{
         "data" => [
-          %{ "id" => (user_1.id - 1), "name" => "Test", "email" => "test@example.com", "stooge" => "testAuth" },
-          %{ "id" => user_1.id, "name" => "John", "email" => "john@example.com", "stooge" => "Jojo" },
-          %{ "id" => user_2.id, "name" => "Jane", "email" => "jane@example.com", "stooge" => nil }
+          %{ "id" => (user_1.id - 1), "name" => "Test", "email" => "test@example.com", "username" => "testAuth" },
+          %{ "id" => user_1.id, "name" => "John", "email" => "john@example.com", "username" => "Jojo" },
+          %{ "id" => user_2.id, "name" => "Jane", "email" => "jane@example.com", "username" => nil }
         ]
       }
 
@@ -40,7 +40,7 @@ defmodule CrossSocialMediasApi.UserControllerTest do
         |> post(user_path(build_conn(), :create, %{ name: "John", email: "john@example.com", password: "fakePassword"}))
         |> json_response(201)
 
-      expected = %{ "data" => %{ "id" => response["data"]["id"], "name" => "John", "email" => "john@example.com", "stooge" => nil } }
+      expected = %{ "data" => %{ "id" => response["data"]["id"], "name" => "John", "email" => "john@example.com", "username" => nil } }
 
       assert response == expected
     end
@@ -67,7 +67,7 @@ defmodule CrossSocialMediasApi.UserControllerTest do
         |> get(user_path(build_conn(), :show, user.id))
         |> json_response(200)
 
-      expected = %{ "data" => %{ "id" => user.id, "name" => "John", "email" => "john@example.com", "stooge" => nil } }
+      expected = %{ "data" => %{ "id" => user.id, "name" => "John", "email" => "john@example.com", "username" => nil } }
 
       assert response == expected
     end
@@ -95,7 +95,7 @@ defmodule CrossSocialMediasApi.UserControllerTest do
         |> put(user_path(build_conn(), :update, user.id, name: "Jane"))
         |> json_response(200)
 
-      expected = %{  "data" => %{"id" => user.id, "name" => "Jane", "email" => "john@example.com", "stooge" => nil} }
+      expected = %{  "data" => %{"id" => user.id, "name" => "Jane", "email" => "john@example.com", "username" => nil} }
 
       assert response == expected
     end

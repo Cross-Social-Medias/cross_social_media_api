@@ -3,7 +3,7 @@ defmodule CrossSocialMediasApi.UserTest do
 
   alias CrossSocialMediasApi.User
 
-  @valid_attrs %{name: "John", email: "john@email.com", password: "password", stooge: "Jojo"}
+  @valid_attrs %{name: "John", email: "john@email.com", password: "password", username: "Jojo"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
@@ -16,8 +16,8 @@ defmodule CrossSocialMediasApi.UserTest do
     refute changeset.valid?
   end
 
-  test "stooge is not required" do
-    changeset = User.changeset(%User{}, Map.delete(@valid_attrs, :stooge))
+  test "username is not required" do
+    changeset = User.changeset(%User{}, Map.delete(@valid_attrs, :username))
     assert changeset.valid?
   end
 
@@ -33,7 +33,7 @@ defmodule CrossSocialMediasApi.UserTest do
   end
 
   test "check password constraint" do
-    changeset = User.registration_changeset(%User{}, %{name: "John", email: "john@email.com", stooge: "jojo", password: "short"})
+    changeset = User.registration_changeset(%User{}, %{name: "John", email: "john@email.com", username: "jojo", password: "short"})
     refute changeset.valid?
 
     changeset_2 = User.registration_changeset(%User{}, @valid_attrs)
