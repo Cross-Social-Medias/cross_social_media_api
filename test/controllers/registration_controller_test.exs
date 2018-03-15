@@ -25,7 +25,7 @@ defmodule CrossSocialMediasApi.RegistrationControllerTest do
         ))
         |> json_response(422)
 
-      expected = %{"message" => "User cannot be created", "status" => "unprocessable_entity"}
+      expected = %{"message" => %{"email" => ["can't be blank"], "password" => ["can't be blank"]}, "status" => "unprocessable_entity"}
       assert response == expected
     end
   end
