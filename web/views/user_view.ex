@@ -10,7 +10,7 @@ defmodule CrossSocialMediasApi.UserView do
   end
 
   def render("show.json", %{user: user}) do
-    %{data: render_one(user, CrossSocialMediasApi.UserView, "user.json")}
+    render_one(user, CrossSocialMediasApi.UserView, "user.json")
   end
 
   def render("error.json", _assigns) do

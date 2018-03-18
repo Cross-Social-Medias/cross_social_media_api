@@ -40,7 +40,7 @@ defmodule CrossSocialMediasApi.UserControllerTest do
         |> post(user_path(build_conn(), :create, %{ name: "John", email: "john@example.com", password: "fakePassword"}))
         |> json_response(201)
 
-      expected = %{ "data" => %{ "id" => response["data"]["id"], "name" => "John", "email" => "john@example.com", "username" => nil } }
+      expected = %{ "id" => response["id"], "name" => "John", "email" => "john@example.com", "username" => nil }
 
       assert response == expected
     end
@@ -67,7 +67,7 @@ defmodule CrossSocialMediasApi.UserControllerTest do
         |> get(user_path(build_conn(), :show, user.id))
         |> json_response(200)
 
-      expected = %{ "data" => %{ "id" => user.id, "name" => "John", "email" => "john@example.com", "username" => nil } }
+      expected = %{ "id" => user.id, "name" => "John", "email" => "john@example.com", "username" => nil }
 
       assert response == expected
     end
@@ -95,7 +95,7 @@ defmodule CrossSocialMediasApi.UserControllerTest do
         |> put(user_path(build_conn(), :update, user.id, name: "Jane"))
         |> json_response(200)
 
-      expected = %{  "data" => %{"id" => user.id, "name" => "Jane", "email" => "john@example.com", "username" => nil} }
+      expected = %{"id" => user.id, "name" => "Jane", "email" => "john@example.com", "username" => nil}
 
       assert response == expected
     end
@@ -121,7 +121,7 @@ defmodule CrossSocialMediasApi.UserControllerTest do
         |> get(user_path(build_conn(), :me))
         |> json_response(200)
 
-      expected = %{ "data" => %{ "id" => user.id, "name" => user.name, "email" => user.email, "username" => user.username } }
+      expected = %{ "id" => user.id, "name" => user.name, "email" => user.email, "username" => user.username }
 
       assert response == expected
     end
