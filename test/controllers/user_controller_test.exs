@@ -114,4 +114,29 @@ defmodule CrossSocialMediasApi.UserControllerTest do
     # end
   end
 
+  describe "me/1" do
+    test "Should return the current user from auth token", %{jwt: jwt, user: user} do
+      response = build_conn()
+        |> put_req_header("authorization", "Bearer #{jwt}")
+        |> get(user_path(build_conn(), :me))
+        |> json_response(200)
+
+      expected = %{ "data" => %{ "id" => user.id, "name" => user.name, "email" => user.email, "username" => user.username } }
+
+      assert response == expected
+    end
+
+    test "Should return from a non existing toker" do
+      jwt = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJVc2VyOjE0NzgiLCJleHAiOjE1MjM5ODQ2MDcsImlhdCI6MTUyMTM5MjYwNywiaXNzIjoiQ3Jvc3NTb2NpYWxNZWRpYXNBcGkiLCJqdGkiOiIyZTA4MGU5Ni00NTkzLTQxY2QtYjNlNy1jNDcyN2VlYWI3OGIiLCJwZW0iOnt9LCJzdWIiOiJVc2VyOjE0NzgiLCJ0eXAiOiJhY2Nlc3MifQ.9Wwi1-xyknPCFWaDqTnWvuTqNtmzprlbtLFFi3-wefG0l22jV8MVxAtZbVCr-OxZ1-m6ewtobdcoJ1UTNNhX6g"
+      response = build_conn()
+        |> put_req_header("authorization", "Bearer #{jwt}")
+        |> get(user_path(build_conn(), :me))
+        |> json_response(404)
+
+      expected = %{"error" => "User not found."}
+
+      assert response == expected
+    end
+  end
+
 end
