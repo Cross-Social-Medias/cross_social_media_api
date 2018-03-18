@@ -25,7 +25,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
         |> json_response(200)
 
       expected = %{
-        "data" => [
+        "mappings" => [
           %{ "mapping_name" => "Anthony Lastella", "twitter_username" => "AnthonyLastella", "instagram_username" => "anthonyLastella", "youtube_channel_id" => "123465", "created_by" => user_1.id },
           %{ "mapping_name" => "John doe", "twitter_username" => "johnDoe", "instagram_username" => "JoJo", "youtube_channel_id" => "123465", "created_by" => user_1.id }
         ]
@@ -124,7 +124,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
         |> json_response(200)
 
       expected = %{
-        "data" => [
+        "mappings" => [
           %{
             "created_by" => user.id,
             "instagram_username" => "JoJo",
@@ -159,7 +159,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingControllerTest do
         |> get(social_media_mapping_path(build_conn(), :search, mapping_name: "Wrong research"))
         |> json_response(200)
 
-      expected = %{ "data" => []}
+      expected = %{ "mappings" => []}
       assert response == expected
     end
   end
