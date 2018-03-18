@@ -1,4 +1,6 @@
 # web/controllers/social_media_mapping_controller
+import Ecto.Query, only: [from: 2]
+
 defmodule CrossSocialMediasApi.SocialMediaMappingController do
   use CrossSocialMediasApi.Web, :controller
 
@@ -6,6 +8,13 @@ defmodule CrossSocialMediasApi.SocialMediaMappingController do
 
   def index(conn, _params) do
     social_media_mappings = Repo.all(SocialMediaMapping)
+    render(conn, "index.json", social_media_mappings: social_media_mappings)
+  end
+
+  def search(conn, %{"mapping_name" => mapping_name}) do
+    param = "%" <> mapping_name <> "%"
+    query = from p in CrossSocialMediasApi.SocialMediaMapping, where: ilike(p.mapping_name, ^param)
+    social_media_mappings = CrossSocialMediasApi.Repo.all(query)
     render(conn, "index.json", social_media_mappings: social_media_mappings)
   end
 

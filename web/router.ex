@@ -34,6 +34,7 @@ defmodule CrossSocialMediasApi.Router do
       resources "/users", UserController
       get "/me", UserController, :me
       resources "/social_media_mappings", SocialMediaMappingController
+      get "/search", SocialMediaMappingController, :search
   end
 
   # Other scopes may use custom stacks.
