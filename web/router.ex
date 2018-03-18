@@ -32,6 +32,7 @@ defmodule CrossSocialMediasApi.Router do
       
       pipe_through :authenticated
       resources "/users", UserController
+      get "/me", UserController, :me
       resources "/social_media_mappings", SocialMediaMappingController
   end
 

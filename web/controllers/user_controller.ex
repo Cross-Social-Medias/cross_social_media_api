@@ -19,6 +19,13 @@ defmodule CrossSocialMediasApi.UserController do
     render conn, "index.json", users: users
   end
 
+  def me(conn, _params) do
+    case Guardian.Plug.current_resource(conn) do
+      nil -> conn |> put_status(404) |> render("error.json")
+      user -> render(conn, "show.json", user: user)
+    end
+  end
+
   def show(conn, %{"id" => id}) do
     case Repo.get(User, id) do
       nil -> conn |> put_status(404) |> render("error.json")
