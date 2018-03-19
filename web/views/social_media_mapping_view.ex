@@ -10,7 +10,7 @@ defmodule CrossSocialMediasApi.SocialMediaMappingView do
        twitter_username: social_media_mapping.twitter_username,
        instagram_username: social_media_mapping.instagram_username,
        youtube_channel_id: social_media_mapping.youtube_channel_id,
-       created_by: social_media_mapping.created_by
+       user_id: social_media_mapping.user_id
     }
   end
 
