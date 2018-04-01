@@ -1,4 +1,6 @@
 # web/models.user.ex
+import Ecto.Query, only: [from: 2]
+
 defmodule CrossSocialMediasApi.User do
   use CrossSocialMediasApi.Web, :model
 
@@ -59,6 +61,11 @@ defmodule CrossSocialMediasApi.User do
       _ ->
         changeset
     end
+  end
+
+  def my_social_media_mappings(model) do
+    Repo.all from mappings in CrossSocialMediasApi.SocialMediaMapping,
+    where: mappings.user_id == ^model.id
   end
 
 end
