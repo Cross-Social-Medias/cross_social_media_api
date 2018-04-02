@@ -51,4 +51,10 @@ defmodule CrossSocialMediasApi.UserTest do
     assert User.my_social_media_mappings(user_2) == [social_media_mappings_3]
   end
 
+  test "check uniq constraint in name" do
+    Repo.insert!(User.changeset(%User{}, %{ name: "John", email: "john@example.com", password: "fake", username: "Jojo"}))
+    user_2 = User.changeset(%User{}, %{ name: "John2", email: "john@example.com", password: "fake", username: "Jojo"})
+    assert {:error, _} = Repo.insert(user_2)
+  end
+
 end

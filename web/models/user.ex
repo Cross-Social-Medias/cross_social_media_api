@@ -21,6 +21,7 @@ defmodule CrossSocialMediasApi.User do
     model
       |> cast(params, [:name, :email, :password, :username])
       |> validate_required([:name, :password, :email])
+      |> unique_constraint(:email)
   end
 
   def registration_changeset(model, params \\ :empty) do
